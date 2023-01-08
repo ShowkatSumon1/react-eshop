@@ -6,6 +6,8 @@ import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../firebase/config';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from '../../redux/slice/authSlice';
 
 const logo = (
     <div className={styles.logo}>
@@ -50,16 +52,33 @@ const Header = () => {
         });
     }
 
+    ////// Redux toolkit options
+    const dispatch = useDispatch();
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid;
-                setDisplayName(user.displayName);
+                if (user.displayName == null) {
+                    const u1 = user.email.substring(0, user.email.indexOf('@'))
+                    const dName = u1.charAt(0).toUpperCase() + u1.slice(1);
+
+                    setDisplayName(dName);
+                } else {
+                    setDisplayName(user.displayName);
+                }
+
+                ///// send to reducer
+                dispatch(SET_ACTIVE_USER({
+                    userName: user.displayName,
+                    userID: user.uid,
+                    email: user.email,
+                }))
             } else {
                 setDisplayName('');
+                dispatch(REMOVE_ACTIVE_USER());
             }
         });
-    }, [])
+    }, [dispatch, displayName])
 
     return (
         <header>
@@ -94,8 +113,8 @@ const Header = () => {
                             <NavLink to='/login' className={activeClass}>
                                 Login
                             </NavLink>
-                            <a href="#">
-                                <FaUserCircle/>
+                            <a href="#home">
+                                <FaUserCircle />
                                 Hi, {displayName}
                             </a>
                             <NavLink to='/register' className={activeClass}>

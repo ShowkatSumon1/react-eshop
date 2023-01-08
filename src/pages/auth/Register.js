@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../components/card/Card';
 import styles from './auth.module.scss';
 import regiImg from '../../assets/register.png';
@@ -24,7 +24,7 @@ const Register = () => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
+                // const user = userCredential.user;
                 setIsLoading(false);
                 toast.success('Account is created');
                 navigate('/login');
