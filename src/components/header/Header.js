@@ -8,6 +8,7 @@ import { auth } from '../../firebase/config';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from '../../redux/slice/authSlice';
+import ShowOnLogin, { ShowOnLogout } from '../hiddenLink/hiddenLink';
 
 const logo = (
     <div className={styles.logo}>
@@ -110,22 +111,27 @@ const Header = () => {
 
                     <div className={styles['header-right']} onClick={hideMenu}>
                         <span className={styles.links}>
-                            <NavLink to='/login' className={activeClass}>
-                                Login
-                            </NavLink>
-                            <a href="#home">
-                                <FaUserCircle />
-                                Hi, {displayName}
-                            </a>
-                            <NavLink to='/register' className={activeClass}>
-                                Register
-                            </NavLink>
-                            <NavLink to='/order-history' className={activeClass}>
-                                My Order
-                            </NavLink>
-                            <NavLink to='/' onClick={userLogout}>
-                                Logout
-                            </NavLink>
+                            <ShowOnLogout>
+                                <NavLink to='/login' className={activeClass}>
+                                    Login
+                                </NavLink>
+                            </ShowOnLogout>
+                            <ShowOnLogin>
+                                <a href="#home" style={{color: '#ff7722'}}>
+                                    <FaUserCircle size={16}/>
+                                    Hi, {displayName}
+                                </a>
+                            </ShowOnLogin>
+                            <ShowOnLogin>
+                                <NavLink to='/order-history' className={activeClass}>
+                                    My Order
+                                </NavLink>
+                            </ShowOnLogin>
+                            <ShowOnLogin>
+                                <NavLink to='/' onClick={userLogout}>
+                                    Logout
+                                </NavLink>
+                            </ShowOnLogin>
                         </span>
                         {cart}
                     </div>
