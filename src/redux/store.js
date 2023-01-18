@@ -1,25 +1,22 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slice/authSlice";
+import filterReducer from "./slice/filterSlice";
 import productReducer from "./slice/productSlice";
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    product: productReducer,
+  auth: authReducer,
+  product: productReducer,
+  filter: filterReducer,
 });
 
 const store = configureStore({
-    reducer: rootReducer,
+  reducer: rootReducer,
 
-    //// For error problem:
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                // Ignore these action types
-                ignoredActions: ['product/STORE_PRODUCTS'],
-                // Ignore these paths in the state
-                ignoredPaths: ['product.products'],
-            },
-        }),
-})
+  //// For error problem:
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
 
 export default store;

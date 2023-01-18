@@ -1,17 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 ////// components from index
 import { Footer, Header } from "./components";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
+import ProductDetails from "./components/product/productDetails/ProductDetails";
 //// pages from index
 import { Admin, Contact, Home, Login, Register, Reset } from "./pages";
 
 function App() {
   return (
     <>
-      <ToastContainer autoClose={500}/>
+      <ToastContainer autoClose={600} />
       <BrowserRouter>
         <Header />
         <Routes>
@@ -21,7 +22,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />
 
-          <Route path="/admin/*" element={ <AdminOnlyRoute> <Admin /> </AdminOnlyRoute>} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
+
+          <Route
+            path="/admin/*"
+            element={
+              <AdminOnlyRoute>
+                {" "}
+                <Admin />{" "}
+              </AdminOnlyRoute>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>
