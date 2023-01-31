@@ -42,7 +42,7 @@ const ProductList = ({ products }) => {
 
   ///////for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPerPage, setProductPerPage] = useState(1);
+  const [productPerPage] = useState(9);
   /// now some of calculation
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
@@ -50,6 +50,7 @@ const ProductList = ({ products }) => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
+  ////// pagination done.
 
   return (
     <div className={styles["product-list"]} id="product">
@@ -89,7 +90,8 @@ const ProductList = ({ products }) => {
           <p>No product found</p>
         ) : (
           <>
-            {filterProducts.map((product) => {
+            {/* filterProducts.map chilo filter a kajer somoy. Pagination er jonno ekhon currentProducts.map */}
+            {currentProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} product={product} grid={grid} />

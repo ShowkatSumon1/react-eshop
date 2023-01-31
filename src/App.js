@@ -6,13 +6,21 @@ import "react-toastify/dist/ReactToastify.css";
 import { Footer, Header } from "./components";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
+import ReviewProducts from "./components/reviewProducts/ReviewProducts";
 //// pages from index
 import { Admin, Contact, Home, Login, Register, Reset } from "./pages";
+import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/checkout/Checkout";
+import CheckoutDetails from "./pages/checkout/CheckoutDetails";
+import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
+import NotFound from "./pages/notFound/NotFound";
+import OrderDetails from "./pages/orderDetails/OrderDetails";
+import OrderHistory from "./pages/orderHistory/OrderHistory";
 
 function App() {
   return (
     <>
-      <ToastContainer autoClose={600} />
+      <ToastContainer autoClose={500} />
       <BrowserRouter>
         <Header />
         <Routes>
@@ -23,7 +31,14 @@ function App() {
           <Route path="/reset" element={<Reset />} />
 
           <Route path="/product-details/:id" element={<ProductDetails />} />
-
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout-details" element={<CheckoutDetails />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout-success" element={<CheckoutSuccess />} />
+          <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/order-details/:id" element={<OrderDetails />} />
+          <Route path="/review-product/:id" element={<ReviewProducts />} />
+          <Route path="*" element={<NotFound />} />
           <Route
             path="/admin/*"
             element={

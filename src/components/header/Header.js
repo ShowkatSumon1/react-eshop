@@ -6,13 +6,17 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hiddenLink/hiddenLink";
 import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
+import {
+  selectCartTotalQuantity,
+  TOTAL_QUANTITY,
+} from "../../redux/slice/cartSlice";
 
 const logo = (
   <div className={styles.logo}>
@@ -23,21 +27,40 @@ const logo = (
     </Link>
   </div>
 );
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart
-      <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
 const activeClass = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
+  const [sticky, setSticky] = useState(false);
 
+  ////// Redux toolkit options
+  const dispatch = useDispatch();
+
+  ///// fixed navbar
+  const fixedNav = () => {
+    if (window.scrollY > 50) {
+      setSticky(true);
+    } else {
+      setSticky(false);
+    }
+  };
+  window.addEventListener("scroll", fixedNav);
+
+  /////////// for cart
+  const totalQuantity = useSelector(selectCartTotalQuantity);
+  useEffect(() => {
+    dispatch(TOTAL_QUANTITY());
+  }, [dispatch]);
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart
+        <FaShoppingCart size={20} />
+        <p>{totalQuantity}</p>
+      </Link>
+    </span>
+  );
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -58,9 +81,6 @@ const Header = () => {
         toast.error(error.message);
       });
   };
-
-  ////// Redux toolkit options
-  const dispatch = useDispatch();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -90,7 +110,7 @@ const Header = () => {
   }, [dispatch, displayName]);
 
   return (
-    <header>
+    <header className={sticky ? styles.fixed : null}>
       <div className={styles.header}>
         {logo}
         <nav

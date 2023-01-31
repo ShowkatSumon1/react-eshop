@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA-TqhBtWWAXgJjOlRLA2jlznP0N4WpSFQ",
@@ -9,7 +9,7 @@ export const firebaseConfig = {
   projectId: "eshop-dem",
   storageBucket: "eshop-dem.appspot.com",
   messagingSenderId: "570315772000",
-  appId: "1:570315772000:web:bacb4d6872c499737bb305"
+  appId: "1:570315772000:web:bacb4d6872c499737bb305",
 };
 
 // Initialize Firebase
